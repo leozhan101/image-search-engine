@@ -9,4 +9,9 @@ The dataset currently being used is retrieved from keras named CIFAR-10, which i
 2. keras (use `pip install keras` to install)
 3. tensorflow (use `pip install tensorflow` to install)
 
+# To run cnn-classifier
+Simply run:
+`python cnn-classifier`
+
+
 
