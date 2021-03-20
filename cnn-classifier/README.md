@@ -13,5 +13,7 @@ The dataset currently being used is retrieved from keras named CIFAR-10, which i
 Simply run:
 `python cnn-classifier`
 
+# Reference
+https://stackabuse.com/image-recognition-in-python-with-tensorflow-and-keras/
 
 
