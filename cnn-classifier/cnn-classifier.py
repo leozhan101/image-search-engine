@@ -10,7 +10,24 @@ from keras.datasets import cifar10 # here, we use the cifar10 dataset, which can
 seed = 21
 
 # 1. loading in the data
+# The training set of the CIFAR10 dataset contains 50000 images. 
+# The shape of X_train is (50000, 32, 32, 3). Each image is 32px by 32px and each pixel contains 3 dimensions (R, G, B). 
+# Each value is the brightness of the corresponding color between 0 and 255.
+
 (X_train, y_train), (X_test, y_test) = cifar10.load_data()
+print("data loaded ------")
+print("data format ------")
+print(len(X_train))
+#print(X_train)
+print("image format ------")
+print(len(X_train[0]))
+#print(X_train[0]) #[0] -> individual image
+print(len(X_train[0][0]))
+#print(X_train[0][0]) #[0] -> individual image
+#print("Xtrain shape")
+#print(X_train.shape[1])
+print("input shape ------")
+print(X_train.shape[1:])
 
 # 2. normalize the inputs from 0-255 to between 0 and 1 by dividing by 255
 # this is to improve the performance of the model
@@ -27,6 +44,7 @@ X_test = X_test / 255.0
 y_train = np_utils.to_categorical(y_train)
 y_test = np_utils.to_categorical(y_test)
 class_num = y_test.shape[1]
+#print(X_train[0][0])
 
 # 4. Create a model
 # here, a sequnencial model is used
@@ -48,22 +66,32 @@ model.add(BatchNormalization())
 model.add(Flatten()) # flatten the data for ANN part
 model.add(Dropout(0.2))
 
-model.add(Dense(256, kernel_constraint=maxnorm(3))) # densly connected layer with 256 neurons
-model.add(Activation('relu'))
-model.add(Dropout(0.2))
-model.add(BatchNormalization())
+#model.add(Dense(256, kernel_constraint=maxnorm(3))) # densly connected layer with 256 neurons
+#model.add(Activation('relu'))
+#model.add(Dropout(0.2))
+#model.add(BatchNormalization())
     
-model.add(Dense(128, kernel_constraint=maxnorm(3))) # densly connected layer with 128 neurons
-model.add(Activation('relu'))
-model.add(Dropout(0.2))
-model.add(BatchNormalization())
+#model.add(Dense(128, kernel_constraint=maxnorm(3))) # densly connected layer with 128 neurons
+#model.add(Activation('relu'))
+#model.add(Dropout(0.2))
+#model.add(BatchNormalization())
 
-model.add(Dense(class_num))
-model.add(Activation('softmax'))
+#model.add(Dense(class_num))
+#model.add(Activation('softmax'))
 
-epochs = 25 # number of epochs we want to train for
-optimizer = 'adam'
+#epochs = 25 # number of epochs we want to train for
+#optimizer = 'adam'
 
 # 6. Compile the model
-model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
+#model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
+print("-------------------------------------------")
+print(model.layers[10].output)
+print("-------------------------------------------")
 print(model.summary())
+result = model.predict(X_train[0].reshape(-1,32,32,3))
+print("before cnn ------")
+print(X_train[0])
+print((X_train[0]).shape)
+print("after cnn ------")
+print(result)
+print(result.shape)

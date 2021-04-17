@@ -10,8 +10,7 @@ The dataset currently being used is retrieved from keras named CIFAR-10, which i
 3. tensorflow (use `pip install tensorflow` to install)
 
 # To run cnn-classifier
-Simply run:
-`python cnn-classifier`
+run `python cnn-classifier`
 
 # Reference
 https://stackabuse.com/image-recognition-in-python-with-tensorflow-and-keras/
