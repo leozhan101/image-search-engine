@@ -26,14 +26,16 @@ for imagePath in glob.glob(args["dataset"] + "/*.png"):
 	# extract the image ID (i.e. the unique filename) from the image
 	# path and load the image itself
 	imageID = imagePath[imagePath.rfind("/") + 1:]
+	imageID = imageID[8:]
+
 	image = cv2.imread(imagePath)
 
 	# describe the image
 	features = cd.describe(image)
-
+	
 	# write the features to file
 	features = [str(f) for f in features]
 	output.write("%s,%s\n" % (imageID, ",".join(features)))
-
+	
 # close the index file
 output.close()
