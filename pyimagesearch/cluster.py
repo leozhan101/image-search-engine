@@ -6,28 +6,26 @@ import csv
 
 class Cluster:
     def __init__(self, indexPath):
-        # store our index path
         self.indexPath = indexPath
 
-    def cluster(self, limit = 10):
-        # initialize our dictionary of results
+    def cluster(self):
         results = []
+        imageName = []
 
-        # open the index file for reading
         with open(self.indexPath) as f:
             reader = csv.reader(f)
             for row in reader:
                 features = [float(x) for x in row[1:]]
 
+                imageName.append(row[0])
+
                 results.append(features)
         f.close()
 
         allImages = np.array(results)
+        
+        # 800
+        kmeans = KMeans(n_clusters=10, n_init = 800, random_state=0).fit(allImages)
 
-        kmeans = KMeans(n_clusters=10, n_init = 1000, random_state=0).fit(allImages)
-        #
-        print(kmeans.labels_)
-        #
-        print(kmeans.cluster_centers_)
+        return kmeans.labels_ , kmeans.cluster_centers_, imageName
 
-        return 0

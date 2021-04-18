@@ -3,6 +3,7 @@
 
 # import the necessary packages
 from pyimagesearch.colordescriptor import ColorDescriptor
+from pyimagesearch.cluster import Cluster
 import argparse
 import glob
 import cv2
@@ -13,6 +14,8 @@ ap.add_argument("-d", "--dataset", required = True,
 	help = "Path to the directory that contains the images to be indexed")
 ap.add_argument("-i", "--index", required = True,
 	help = "Path to where the computed index will be stored")
+# ap.add_argument("-kp", "--kPath", required = True,
+# 	help = "Path to where the kmeans centres, labels, etc will be stored ")
 args = vars(ap.parse_args())
 
 # initialize the color descriptor
@@ -38,4 +41,26 @@ for imagePath in glob.glob(args["dataset"] + "/*.png"):
 	output.write("%s,%s\n" % (imageID, ",".join(features)))
 	
 # close the index file
+output.close()
+
+
+myCluster = Cluster(args["index"])
+labels, centres, images = myCluster.cluster()
+
+output = open("clusteringInfo/labels.csv", "w")
+labelsInfo = [str(l) for l in labels]
+output.write(",".join(labelsInfo))
+output.close()
+#
+output = open("clusteringInfo/centres.csv", "w")
+for i in range(0, len(centres)):
+	centre = []
+	for j in range(0, len(centres[i])):
+		centre.append(str(centres[i][j]))
+	output.write(",".join(centre) + "\n")
+output.close()
+
+output = open("clusteringInfo/images.csv", "w")
+imagesInfo = [str(i) for i in images]
+output.write(",".join(imagesInfo))
 output.close()
