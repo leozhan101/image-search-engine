@@ -51,14 +51,17 @@ class_num = y_test.shape[1]
 model = Sequential()
 
 # 5. Add layers
+print(X_train.shape[1:])
 model.add(Conv2D(32, (3, 3), input_shape=X_train.shape[1:], padding='same')) # A convolutional layer with 32 3x3 filters 
 model.add(Activation('relu'))
 model.add(Dropout(0.2)) # A dropout layer that randonly drops out the connections between the layers. This is to prevent overfitting
-model.add(BatchNormalization()) # normalize input head into the next layer
+# model.add(BatchNormalization()) # normalize input head into the next layer
 
-model.add(Conv2D(64, (3, 3), padding='same')) # Another convolutional layer with more filters so that more features can be captured
-model.add(Activation('relu'))
+# model.add(Conv2D(64, (3, 3), padding='same')) # Another convolutional layer with more filters so that more features can be captured
+# model.add(Activation('relu'))
 
+model.add(MaxPooling2D(pool_size=(3, 3))) # extract features
+model.add(Dropout(0.2))
 model.add(MaxPooling2D(pool_size=(2, 2))) # extract features
 model.add(Dropout(0.2))
 model.add(BatchNormalization())
@@ -66,6 +69,7 @@ model.add(BatchNormalization())
 model.add(Flatten()) # flatten the data for ANN part
 model.add(Dropout(0.2))
 
+#code for ANN training
 #model.add(Dense(256, kernel_constraint=maxnorm(3))) # densly connected layer with 256 neurons
 #model.add(Activation('relu'))
 #model.add(Dropout(0.2))
@@ -82,16 +86,7 @@ model.add(Dropout(0.2))
 #epochs = 25 # number of epochs we want to train for
 #optimizer = 'adam'
 
-# 6. Compile the model
-#model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
-print("-------------------------------------------")
-print(model.layers[10].output)
-print("-------------------------------------------")
-print(model.summary())
-result = model.predict(X_train[0].reshape(-1,32,32,3))
-print("before cnn ------")
-print(X_train[0])
-print((X_train[0]).shape)
-print("after cnn ------")
-print(result)
-print(result.shape)
+# 6. Run the model
+vectors = model.predict(X_train[0:1000].reshape(-1,32,32,3))
+print(vectors)
+numpy.savetxt("index.csv", vectors, delimiter=",") # save result to index.csv
