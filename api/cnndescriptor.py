@@ -1,3 +1,5 @@
+# converts an image in the testing set to a vector
+
 import numpy
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten, BatchNormalization, Activation
