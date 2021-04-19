@@ -87,6 +87,6 @@ model.add(Dropout(0.2))
 #optimizer = 'adam'
 
 # 6. Run the model
-vectors = model.predict(X_train[0:1000].reshape(-1,32,32,3))
+vectors = model.predict(X_train[0:100].reshape(-1,32,32,3))
 print(vectors)
 numpy.savetxt("index.csv", vectors, delimiter=",") # save result to index.csv
