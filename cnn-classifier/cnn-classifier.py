@@ -6,8 +6,6 @@ from keras.constraints import maxnorm
 from keras.utils import np_utils
 from keras.datasets import cifar10 # here, we use the cifar10 dataset, which can be imported from keras
 
-# Set random seed for purposes of reproducibility
-seed = 21
 
 # 1. loading in the data
 # The training set of the CIFAR10 dataset contains 50000 images. 
@@ -55,10 +53,6 @@ print(X_train.shape[1:])
 model.add(Conv2D(32, (3, 3), input_shape=X_train.shape[1:], padding='same')) # A convolutional layer with 32 3x3 filters 
 model.add(Activation('relu'))
 model.add(Dropout(0.2)) # A dropout layer that randonly drops out the connections between the layers. This is to prevent overfitting
-# model.add(BatchNormalization()) # normalize input head into the next layer
-
-# model.add(Conv2D(64, (3, 3), padding='same')) # Another convolutional layer with more filters so that more features can be captured
-# model.add(Activation('relu'))
 
 model.add(MaxPooling2D(pool_size=(3, 3))) # extract features
 model.add(Dropout(0.2))
@@ -68,23 +62,6 @@ model.add(BatchNormalization())
 
 model.add(Flatten()) # flatten the data for ANN part
 model.add(Dropout(0.2))
-
-#code for ANN training
-#model.add(Dense(256, kernel_constraint=maxnorm(3))) # densly connected layer with 256 neurons
-#model.add(Activation('relu'))
-#model.add(Dropout(0.2))
-#model.add(BatchNormalization())
-    
-#model.add(Dense(128, kernel_constraint=maxnorm(3))) # densly connected layer with 128 neurons
-#model.add(Activation('relu'))
-#model.add(Dropout(0.2))
-#model.add(BatchNormalization())
-
-#model.add(Dense(class_num))
-#model.add(Activation('softmax'))
-
-#epochs = 25 # number of epochs we want to train for
-#optimizer = 'adam'
 
 # 6. Run the model
 vectors = model.predict(X_train[0:1000].reshape(-1,32,32,3))
