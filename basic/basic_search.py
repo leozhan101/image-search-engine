@@ -1,6 +1,10 @@
-	# import the necessary packages
-from pyimagesearch.colordescriptor import ColorDescriptor
-from pyimagesearch.searcher import Searcher
+import os, sys
+currentdir = os.path.dirname(os.path.realpath(__file__))
+parentdir = os.path.dirname(currentdir)
+sys.path.append(parentdir)
+
+from basic.pyimagesearch.colordescriptor import ColorDescriptor
+from basic.pyimagesearch.searcher import Searcher
 import argparse
 import cv2
 from keras.datasets import cifar10
@@ -15,7 +19,7 @@ def search(index):
 	features = cd.describe(query)
 
 	# perform the search
-	searcher = Searcher("index.csv")
+	searcher = Searcher("../basic/index.csv")
 	results = searcher.search(features)
 
 	print(results)
@@ -27,4 +31,4 @@ def search(index):
 	
 	return results_index
 
-search(6)
+# search(6)

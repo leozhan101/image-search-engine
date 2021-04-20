@@ -27,8 +27,8 @@ def open_csv(filePath):
 
 
 def search(index):
-    labels = open_csv("cnn_labels.csv")
-    centres = open_csv("cnn_centres.csv")
+    labels = open_csv("../kmeans_clustering/cnn_labels.csv")
+    centres = open_csv("../kmeans_clustering/cnn_centres.csv")
 
     (X_train, y_train), (X_test, y_test) = cifar10.load_data()
 
@@ -78,7 +78,7 @@ def search(index):
         
     return results_index
 
-search(1)
+# search(1)
 
 
 

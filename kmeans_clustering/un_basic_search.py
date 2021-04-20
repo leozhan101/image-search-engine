@@ -31,8 +31,8 @@ def chi2_distance(histA, histB, eps=1e-10):
 
 def search(index):
     
-    labels = open_csv("basic_labels.csv")
-    centres = open_csv("basic_centres.csv")
+    labels = open_csv("../kmeans_clustering/basic_labels.csv")
+    centres = open_csv("../kmeans_clustering/basic_centres.csv")
 
     (X_train, y_train), (X_test, y_test) = cifar10.load_data()
     # initialize the image descriptor
@@ -53,7 +53,7 @@ def search(index):
             min_distance = chi2_distance(queryFeatures, centres[i])
             cluster_label = i
     
-    print("label here: ", cluster_label)
+    # print("label here: ", cluster_label)
 
 
     # # find indexes of all images that are in the target cluster
@@ -87,7 +87,7 @@ def search(index):
         
     return results_index
 
-search(6)
+# search(6)
 
 
 

@@ -1,10 +1,16 @@
+import os, sys
+currentdir = os.path.dirname(os.path.realpath(__file__))
+parentdir = os.path.dirname(currentdir)
+sys.path.append(parentdir)
+
 import numpy as np
 import csv
 import argparse
 import cv2
 from keras.datasets import cifar10
-from cnndescriptor import CNNDescriptor
+from cnn_classifier.cnndescriptor import CNNDescriptor
 from sklearn.metrics.pairwise import cosine_similarity
+
 
 def search(index):
     descriptor = CNNDescriptor(index)
@@ -15,7 +21,7 @@ def search(index):
 
     results = {}
 
-    with open("index.csv") as f:
+    with open("../cnn_classifier/index.csv") as f:
         reader = csv.reader(f)
 
         counter = 0
@@ -38,4 +44,4 @@ def search(index):
     
     return results_index
 
-search(1)
+# search(1)
