@@ -61,12 +61,12 @@ def generate_clusteringInfo(filePath):
 	print(k)
 
 	# # code for finding k
-	model = KMeans()
+	# model = KMeans()
 
-	visualizer = KElbowVisualizer(model, k=(1,30))
+	# visualizer = KElbowVisualizer(model, k=(1,30))
 
-	visualizer.fit(allImages)        # Fit the data to the visualizer
-	visualizer.show()        # Finalize and render the figure
+	# visualizer.fit(allImages)        # Fit the data to the visualizer
+	# visualizer.show()        # Finalize and render the figure
 
 	kmeans = KMeans(n_clusters=k, n_init = 100, random_state=0).fit(allImages)
 
@@ -97,4 +97,4 @@ def generate_clusteringInfo(filePath):
 
 generate_clusteringInfo("../basic/index.csv")
 
-generate_clusteringInfo("../cnn-classifier/index.csv")
+generate_clusteringInfo("../cnn_classifier/index.csv")

@@ -1,27 +1,30 @@
-# USAGE
-# python search.py --index index.csv --query queries/103100.png --result-path dataset
-
-# import the necessary packages
+	# import the necessary packages
 from pyimagesearch.colordescriptor import ColorDescriptor
 from pyimagesearch.searcher import Searcher
 import argparse
 import cv2
 from keras.datasets import cifar10
 
-(X_train, y_train), (X_test, y_test) = cifar10.load_data()
+def search(index):
+	(X_train, y_train), (X_test, y_test) = cifar10.load_data()
 
-cd = ColorDescriptor((8, 12, 3))
+	cd = ColorDescriptor((8, 12, 3))
 
-query = X_train[0]
-features = cd.describe(query)
+	query = X_train[index]
+	# query = X_test[index]
+	features = cd.describe(query)
 
-# perform the search
-searcher = Searcher("index.csv")
-results = searcher.search(features)
+	# perform the search
+	searcher = Searcher("index.csv")
+	results = searcher.search(features)
 
-# # display the query
-# cv2.imshow("Query", query)
+	print(results)
+	
+	results_index = []
+	
+	for (score, resultID) in results:
+		results_index.append(resultID)
+	
+	return results_index
 
-# # loop over the results
-for (score, resultID) in results:
-	print(resultID)
+search(6)

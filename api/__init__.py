@@ -12,8 +12,8 @@ def greeting():
 def search():
     return 'search called'
 
-@app.route('/convert/<index>')
-def convert(index):
-    cnnd = CNNDescriptor(index)
-    result = cnnd.describe()
-    return {'vector': result}
+# @app.route('/convert/<index>')
+# def convert(index):
+#     cnnd = CNNDescriptor(index)
+#     result = cnnd.describe()
+#     return {'vector': result}

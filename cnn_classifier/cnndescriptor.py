@@ -42,6 +42,6 @@ class CNNDescriptor:
         model.add(Dropout(0.2))
 
         # 5. Run the model
-        vectors = model.predict(X_test[self.index].reshape(-1,32,32,3))
+        vectors = model.predict(X_train[self.index].reshape(-1,32,32,3))
 
         return vectors
