@@ -17,7 +17,7 @@ def search(index):
 
     queryFeatures = descriptor.describe()
 
-    # print(cosine_similarity(queryFeatures, queryFeatures)[0][0])
+    print(cosine_similarity(queryFeatures, queryFeatures)[0][0])
 
     results = {}
 

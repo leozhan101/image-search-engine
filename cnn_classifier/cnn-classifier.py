@@ -66,4 +66,6 @@ model.add(Dropout(0.2))
 # 6. Run the model
 vectors = model.predict(X_train[0:100].reshape(-1,32,32,3))
 print(vectors)
+
 numpy.savetxt("index.csv", vectors, delimiter=",") # save result to index.csv
+model.save('model') 
