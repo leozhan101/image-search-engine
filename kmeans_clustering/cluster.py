@@ -13,36 +13,17 @@ from sklearn.cluster import KMeans
 import warnings
 from pylab import rcParams
 
+def find_k(allImages, numberOfImages):
+	sil_results = {}
+	kmax = numberOfImages
 
-def calc_distance(x1, y1, a, b, c):
-	d = abs((a * x1 + b * y1 + c)) / (math.sqrt(a * a + b * b))
-	return d
-
-# A helper function to automatically find k
-# This is a variation of elbow method
-# Idea: Connect the starting and ending points of the graph
-# Then find the distance between the newly drawed line with each point in the graph
-# The elbow point will be the one that is the farthest from the newly drawed line
-def find_k(data):
-	dist_points_from_cluster_centre = []
-	K = range(2, 30)
-	for no_of_clusters in K:
-		k_model = KMeans(n_clusters=no_of_clusters)
-		k_model.fit(data)
-		dist_points_from_cluster_centre.append(k_model.inertia_)
-
-	a = dist_points_from_cluster_centre[0] - dist_points_from_cluster_centre[-1]
-	b = K[-1] - K[0]
-	c1 = K[0] * dist_points_from_cluster_centre[-1]
-	c2 = K[-1] * dist_points_from_cluster_centre[0]
-	c = c1 - c2
-
-	distance_of_points_from_line = []
-	for k in range(len(dist_points_from_cluster_centre)):
-		distance_of_points_from_line.append(
-			calc_distance(K[k], dist_points_from_cluster_centre[k], a, b, c))
+	# dissimilarity would not be defined for a single cluster, thus, minimum number of clusters should be 2
+	for k in range(2, kmax):
+		kmeans = KMeans(n_clusters = k).fit(allImages)
+		labels = kmeans.labels_
+		sil_results[k] =  metrics.silhouette_score(allImages, labels)
 	
-	k = distance_of_points_from_line.index(max(distance_of_points_from_line)) + 1
+	k = sorted([(v, k) for (k, v) in sil_results.items()], reverse=True)[0][1]
 	
 	return k
 	
@@ -50,29 +31,24 @@ def find_k(data):
 def generate_clusteringInfo(filePath):
 	results = []
 
+	numberOfImages = 0
     # store features of each image into the results
 	with open(filePath) as f:
 		reader = csv.reader(f)
 		for row in reader:
 			features = [float(x) for x in row[:]]
-
 			results.append(features)
+			numberOfImages += 1
 	f.close()
 
 	# store results as an np array
 	allImages = np.array(results)
+	
+	k = find_k(allImages, numberOfImages)
 
-	k = find_k(allImages)
+	print("k here: ", k)
 
-	# Alternative method for finding k
-	# model = KMeans()
-
-	# visualizer = KElbowVisualizer(model, k=(1,30))
-
-	# visualizer.fit(allImages)        # Fit the data to the visualizer
-	# visualizer.show()        # Finalize and render the figure
-
-	kmeans = KMeans(n_clusters=k, n_init = 2000, random_state=0).fit(allImages)
+	kmeans = KMeans(n_clusters=k, random_state=0).fit(allImages)
 
 	labels = kmeans.labels_
 
@@ -97,10 +73,10 @@ def generate_clusteringInfo(filePath):
 		output.write(",".join(centre) + "\n")
 	output.close()
 
-	SC = metrics.silhouette_score(allImages, labels, metric='euclidean')
-	print(filePath, "Silhouette Coefficient: ", SC)
+	SC = metrics.silhouette_score(allImages, labels)
+	print(prefix, "--Silhouette Coefficient: ", SC)
 
 
-generate_clusteringInfo("../basic/index.csv")
+# generate_clusteringInfo("../basic/index.csv")
 
 generate_clusteringInfo("../cnn_classifier/index.csv")
