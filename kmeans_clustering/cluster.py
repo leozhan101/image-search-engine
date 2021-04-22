@@ -3,6 +3,7 @@
 # information into prefix_centres.csv and prefix_labels.csv
 # ====================================================================================================
 from sklearn.cluster import KMeans
+from sklearn import metrics
 from yellowbrick.cluster import KElbowVisualizer
 import numpy as np
 import csv
@@ -71,7 +72,7 @@ def generate_clusteringInfo(filePath):
 	# visualizer.fit(allImages)        # Fit the data to the visualizer
 	# visualizer.show()        # Finalize and render the figure
 
-	kmeans = KMeans(n_clusters=k, n_init = 500, random_state=0).fit(allImages)
+	kmeans = KMeans(n_clusters=k, n_init = 2000, random_state=0).fit(allImages)
 
 	labels = kmeans.labels_
 
@@ -95,6 +96,9 @@ def generate_clusteringInfo(filePath):
 			centre.append(str(centres[i][j]))
 		output.write(",".join(centre) + "\n")
 	output.close()
+
+	SC = metrics.silhouette_score(allImages, labels, metric='euclidean')
+	print(filePath, "Silhouette Coefficient: ", SC)
 
 
 generate_clusteringInfo("../basic/index.csv")
