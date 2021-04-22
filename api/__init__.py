@@ -22,9 +22,11 @@ def greeting():
 def basicSearch():
     index = int(request.args.get("index"))
 
-    results = jsonify({"results:": basic_search(index)})
+    response = jsonify({"results:": basic_search(index)})
 
-    return results
+    response.headers.add("Access-Control-Allow-Origin", "*")
+
+    return response
 
 @app.route('/cnn_search', methods=['GET'])
 def cnnSearch():
