@@ -1,3 +1,8 @@
+# ====================================================================================================
+# This file is reponsible for finding the indexes of best matching images by comparing the input image 
+# with every image stored in index.csv
+# ====================================================================================================
+
 import os, sys
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
@@ -17,32 +22,28 @@ def search(index):
 
     queryFeatures = descriptor.describe()
 
-    #print("Similarity:")
-    #print(cosine_similarity(queryFeatures, queryFeatures)[0][0])
-
     results = {}
 
     with open("../cnn_classifier/index.csv") as f:
         reader = csv.reader(f)
 
+        # compare input with each image and store the similarity socre into the results
+        # counter represents the index each image stored in index.csv
         counter = 0
         for row in reader:
             features = [[float(x) for x in row[:]]]
-            d = cosine_similarity(features, queryFeatures)[0][0]
+            d = cosine_similarity(features, queryFeatures)[0][0] # calculate the similarity score between input and each image
             results[counter] = d
             counter += 1
 
         f.close()
 
+    # Sort the results by similarity socre in descending order
     results = sorted([(v, k) for (k, v) in results.items()], reverse=True)[:10]
-
-    print(results)
 
     results_index = []
 
     for (score, resultID) in results:
-        results_index.append(resultID)
+        results_index.append(resultID) # resultID is the index of the best matching image
     
     return results_index
-
-# search(1)

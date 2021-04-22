@@ -1,3 +1,7 @@
+# ====================================================================================================
+# This file is reponsible for finding the indexes of best matching images by finding the correponding
+# cluster of the input and comparing input with every image in that cluster
+# ====================================================================================================
 import os, sys
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
@@ -35,34 +39,33 @@ def search(index):
     centres = open_csv("../kmeans_clustering/basic_centres.csv")
 
     (X_train, y_train), (X_test, y_test) = cifar10.load_data()
-    # initialize the image descriptor
     cd = ColorDescriptor((8, 12, 3))
 
-    # load the query image and describe it
-    query = X_train[index]
-    # query = X_test[index]
+    # load input image and extract its features
+    query = X_test[index]
     queryFeatures = cd.describe(query)
 
 
     min_distance = chi2_distance(queryFeatures, centres[0])
     cluster_label = 0
 
-    # find which cluster query belongs to and return the label of that cluster
-    for i in range(1, len(centres)):
+    # find which cluster that input belongs to and return the label of that cluster
+    # by finding the closest centroid
+    for i in range(0, len(centres)):
+        print("i:",i," distance:", chi2_distance(queryFeatures, centres[i]))
         if chi2_distance(queryFeatures, centres[i]) < min_distance:
             min_distance = chi2_distance(queryFeatures, centres[i])
             cluster_label = i
     
-    # print("label here: ", cluster_label)
 
-
-    # # find indexes of all images that are in the target cluster
+    # find indexes of all images that are in the cluster
     image_position = []
     for i in range(0, len(labels)):
         if labels[i] == cluster_label:
             image_position.append(i)
 
 
+    # Compare input with each image in the cluster
     results = {}
     with open("../basic/index.csv") as f:
         reader = csv.reader(f)
@@ -78,16 +81,12 @@ def search(index):
 
     results = sorted([(v, k) for (k, v) in results.items()])[:10]
 
-    print(results)
-
     results_index = []
         
     for (score, resultID) in results:
-        results_index.append(resultID)
+        results_index.append(resultID) # resultID is the index of the best matching images
         
     return results_index
-
-# search(6)
 
 
 

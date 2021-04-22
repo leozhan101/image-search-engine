@@ -1,3 +1,7 @@
+# ====================================================================================================
+# This file is reponsible for finding the indexes of best matching images by comparing the input image 
+# with every image stored in index.csv
+# ====================================================================================================
 import os, sys
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
@@ -14,21 +18,17 @@ def search(index):
 
 	cd = ColorDescriptor((8, 12, 3))
 
-	query = X_train[index]
-	# query = X_test[index]
+	# Get input image and extract it's features
+	query = X_test[index]
 	features = cd.describe(query)
 
-	# perform the search
+	# Pass the input into the search function
 	searcher = Searcher("../basic/index.csv")
 	results = searcher.search(features)
-
-	print(results)
 	
 	results_index = []
 	
 	for (score, resultID) in results:
-		results_index.append(resultID)
+		results_index.append(resultID) # resultID is the index of the best matching image
 	
 	return results_index
-
-# search(6)

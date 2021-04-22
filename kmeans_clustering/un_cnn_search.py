@@ -1,11 +1,12 @@
+# ====================================================================================================
+# This file is reponsible for finding the indexes of best matching images by finding the correponding
+# cluster of the input and comparing input with every image in that cluster
+# ====================================================================================================
 import os, sys
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
-
-# from basic.pyimagesearch.colordescriptor import ColorDescriptor
 from cnn_classifier.cnndescriptor import CNNDescriptor
-# from scipy.spatial.distance import cdist
 import numpy as np
 from keras.datasets import cifar10
 import cv2
@@ -32,28 +33,30 @@ def search(index):
 
     (X_train, y_train), (X_test, y_test) = cifar10.load_data()
 
-    # initialize the image descriptor
+    # load input image and extract its features
     descriptor = CNNDescriptor(index)
     queryFeatures = descriptor.describe()
 
 
-    min_distance = cosine_similarity(queryFeatures, [centres[0]])[0][0]
+    max_similarity = cosine_similarity([centres[0]], queryFeatures)[0][0]
+    
     cluster_label = 0
 
-    # find which cluster query belongs to and return the label of that cluster
+    # find which cluster that input belongs to and return the label of that cluster
+    # by finding the most similar centroid
     for i in range(1, len(centres)):
-        if cosine_similarity(queryFeatures, [centres[i]])[0][0] < min_distance:
-            min_distance = cosine_similarity(queryFeatures, [centres[i]])[0][0]
+        if cosine_similarity(queryFeatures, [centres[i]])[0][0] > max_similarity:
+            max_similarity = cosine_similarity([centres[i]], queryFeatures)[0][0]
             cluster_label = i
 
-
-    # # find indexes of all images that are in the target cluster
+    # find indexes of all images that are in the cluster
     image_position = []
     for i in range(0, len(labels)):
         if labels[i] == cluster_label:
             image_position.append(i)
 
 
+    # Compare input with each image in the cluster
     results = {}
     with open("../cnn_classifier/index.csv") as f:
         reader = csv.reader(f)
@@ -69,18 +72,12 @@ def search(index):
 
     results = sorted([(v, k) for (k, v) in results.items()], reverse=True)[:10]
 
-    print(results)
-
     results_index = []
         
     for (score, resultID) in results:
-        results_index.append(resultID)
+        results_index.append(resultID) # resultID is the index of the best matching images
         
     return results_index
-
-# search(1)
-
-
 
 
 

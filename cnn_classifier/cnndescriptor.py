@@ -38,6 +38,6 @@ class CNNDescriptor:
         layer = model.get_layer('dropout_2')
         keras_function = backend.function([model.input], [layer.output])
         vector = keras_function(([X_test[self.index].reshape(-1,32,32,3), 1])[0])
-        print(vector[0])
+        # print(vector[0])
 
         return vector[0]
