@@ -32,22 +32,28 @@ def basicSearch():
 def cnnSearch():
     index = int(request.args.get("index"))
 
-    results = jsonify({"results:":cnn_search(index)})
+    response = jsonify({"results:":cnn_search(index)})
 
-    return results
+    response.headers.add("Access-Control-Allow-Origin", "*")
+
+    return response
 
 @app.route('/un_cnn_search', methods=['GET'])
 def unCnnSearch():
     index = int(request.args.get("index"))
 
-    results = jsonify({"results:": un_cnn_search(index)})
+    response = jsonify({"results:": un_cnn_search(index)})
 
-    return results
+    response.headers.add("Access-Control-Allow-Origin", "*")
+
+    return response
 
 @app.route('/un_basic_search', methods=['GET'])
 def unBasicSearch():
     index = int(request.args.get("index"))
 
-    results = jsonify({"results:": un_basic_search(index)})
+    response = jsonify({"results:": un_basic_search(index)})
 
-    return results
+    response.headers.add("Access-Control-Allow-Origin", "*")
+
+    return response
