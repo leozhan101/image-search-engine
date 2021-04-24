@@ -9,8 +9,6 @@ sys.path.append(parentdir)
 
 from basic.pyimagesearch.colordescriptor import ColorDescriptor
 from basic.pyimagesearch.searcher import Searcher
-import argparse
-import cv2
 from keras.datasets import cifar10
 
 def search(index):

@@ -13,21 +13,6 @@ from sklearn.cluster import KMeans
 import warnings
 from pylab import rcParams
 
-def find_k(allImages, numberOfImages):
-	sil_results = {}
-	kmax = numberOfImages
-
-	# dissimilarity would not be defined for a single cluster, thus, minimum number of clusters should be 2
-	for k in range(2, kmax):
-		kmeans = KMeans(n_clusters = k).fit(allImages)
-		labels = kmeans.labels_
-		sil_results[k] =  metrics.silhouette_score(allImages, labels)
-	
-	k = sorted([(v, k) for (k, v) in sil_results.items()], reverse=True)[0][1]
-	
-	return k
-	
-
 def generate_clusteringInfo(filePath):
 	results = []
 
@@ -44,11 +29,7 @@ def generate_clusteringInfo(filePath):
 	# store results as an np array
 	allImages = np.array(results)
 	
-	k = find_k(allImages, numberOfImages)
-
-	print("k here: ", k)
-
-	kmeans = KMeans(n_clusters=k, random_state=0).fit(allImages)
+	kmeans = KMeans(n_clusters=10,  n_init=200, random_state=0).fit(allImages)
 
 	labels = kmeans.labels_
 
@@ -74,9 +55,9 @@ def generate_clusteringInfo(filePath):
 	output.close()
 
 	SC = metrics.silhouette_score(allImages, labels)
-	print(prefix, "--Silhouette Coefficient: ", SC)
+	print(prefix, "Silhouette Coefficient: ", SC)
 
 
 # generate_clusteringInfo("../basic/index.csv")
 
-generate_clusteringInfo("../cnn_classifier/index.csv")
+# generate_clusteringInfo("../cnn_classifier/index.csv")
