@@ -25,7 +25,7 @@ model = load_model('model')
 # Save result of dropout_2 layer to csv
 layer = model.get_layer('dropout_2')
 keras_function = backend.function([model.input], [layer.output])
-vector = keras_function(([X_test[0:100].reshape(-1,32,32,3), 1])[0])
+vector = keras_function(([X_test[0:10000].reshape(-1,32,32,3), 1])[0])
 
 print(vector[0])
 numpy.savetxt("index.csv", vector[0], delimiter=",")
