@@ -16,7 +16,7 @@ def search(index):
 
 	cd = ColorDescriptor((8, 12, 3))
 
-	# Get input image and extract it's features
+	# Get input image and extract it's features s
 	query = X_test[index]
 	features = cd.describe(query)
 
