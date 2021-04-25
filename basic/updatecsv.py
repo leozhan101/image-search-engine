@@ -12,7 +12,7 @@ cd = ColorDescriptor((8, 12, 3))
 
 # Write feature info of each training image to index.csv
 output = open("index.csv", "w")
-for image in X_train:
+for image in X_test:
 	features = cd.describe(image) # extract features from each image
 	features = [str(f) for f in features]
 	output.write(",".join(features) + "\n")

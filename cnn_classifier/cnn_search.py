@@ -8,11 +8,7 @@ currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
-import numpy as np
 import csv
-import argparse
-import cv2
-from keras.datasets import cifar10
 from cnn_classifier.cnndescriptor import CNNDescriptor
 from sklearn.metrics.pairwise import cosine_similarity
 

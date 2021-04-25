@@ -29,7 +29,7 @@ def generate_clusteringInfo(filePath):
 	# store results as an np array
 	allImages = np.array(results)
 	
-	kmeans = KMeans(n_clusters=10,  n_init=200, random_state=0).fit(allImages)
+	kmeans = KMeans(n_clusters=10,  n_init=300, random_state=0).fit(allImages)
 
 	labels = kmeans.labels_
 
@@ -58,6 +58,6 @@ def generate_clusteringInfo(filePath):
 	print(prefix, "Silhouette Coefficient: ", SC)
 
 
-# generate_clusteringInfo("../basic/index.csv")
+generate_clusteringInfo("../basic/index.csv")
 
-# generate_clusteringInfo("../cnn_classifier/index.csv")
+generate_clusteringInfo("../cnn_classifier/index.csv")

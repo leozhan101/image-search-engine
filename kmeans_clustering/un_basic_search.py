@@ -8,10 +8,9 @@ parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
 from basic.pyimagesearch.colordescriptor import ColorDescriptor
-from scipy.spatial.distance import cdist
+from scipy.spatial import distance
 import numpy as np
 from keras.datasets import cifar10
-import cv2
 import csv
 
 def open_csv(filePath):
@@ -46,15 +45,14 @@ def search(index):
     queryFeatures = cd.describe(query)
 
 
-    min_distance = chi2_distance(queryFeatures, centres[0])
+    min_distance = distance.euclidean(queryFeatures, centres[0])
     cluster_label = 0
 
     # find which cluster that input belongs to and return the label of that cluster
     # by finding the closest centroid
     for i in range(0, len(centres)):
-        print("i:",i," distance:", chi2_distance(queryFeatures, centres[i]))
-        if chi2_distance(queryFeatures, centres[i]) < min_distance:
-            min_distance = chi2_distance(queryFeatures, centres[i])
+        if distance.euclidean(queryFeatures, centres[i]) < min_distance:
+            min_distance = distance.euclidean(queryFeatures, centres[i])
             cluster_label = i
     
 

@@ -7,9 +7,7 @@ currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 from cnn_classifier.cnndescriptor import CNNDescriptor
-import numpy as np
-from keras.datasets import cifar10
-import cv2
+from scipy.spatial import distance
 import csv
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -31,22 +29,18 @@ def search(index):
     labels = open_csv("../kmeans_clustering/cnn_labels.csv")
     centres = open_csv("../kmeans_clustering/cnn_centres.csv")
 
-    (X_train, y_train), (X_test, y_test) = cifar10.load_data()
-
     # load input image and extract its features
     descriptor = CNNDescriptor(index)
     queryFeatures = descriptor.describe()
 
-
-    max_similarity = cosine_similarity([centres[0]], queryFeatures)[0][0]
-    
+    min_distance = distance.euclidean(queryFeatures[0], centres[0])
     cluster_label = 0
 
     # find which cluster that input belongs to and return the label of that cluster
-    # by finding the most similar centroid
-    for i in range(1, len(centres)):
-        if cosine_similarity(queryFeatures, [centres[i]])[0][0] > max_similarity:
-            max_similarity = cosine_similarity([centres[i]], queryFeatures)[0][0]
+    # by finding the closest centroid
+    for i in range(0, len(centres)):
+        if distance.euclidean(queryFeatures[0], centres[i]) < min_distance:
+            min_distance = distance.euclidean(queryFeatures[0], centres[i])
             cluster_label = i
 
     # find indexes of all images that are in the cluster
@@ -54,7 +48,6 @@ def search(index):
     for i in range(0, len(labels)):
         if labels[i] == cluster_label:
             image_position.append(i)
-
 
     # Compare input with each image in the cluster
     results = {}
