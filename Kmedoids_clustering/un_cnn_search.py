@@ -26,8 +26,8 @@ def open_csv(filePath):
 
 
 def search(index):
-    labels = open_csv("../Kmedoids_clustering/cnn_labels.csv")
-    centres = open_csv("../Kmedoids_clustering/cnn_centres.csv")
+    labels = open_csv("../kmedoids_clustering/cnn_labels.csv")
+    centres = open_csv("../kmedoids_clustering/cnn_centres.csv")
 
     # load input image and extract its features
     descriptor = CNNDescriptor(index)

@@ -34,8 +34,8 @@ def chi2_distance(histA, histB, eps=1e-10):
 
 def search(index):
     
-    labels = open_csv("../Kmedoids_clustering/basic_labels.csv")
-    centres = open_csv("../Kmedoids_clustering/basic_centres.csv")
+    labels = open_csv("../kmedoids_clustering/basic_labels.csv")
+    centres = open_csv("../kmedoids_clustering/basic_centres.csv")
 
     (X_train, y_train), (X_test, y_test) = cifar10.load_data()
     cd = ColorDescriptor((8, 12, 3))
