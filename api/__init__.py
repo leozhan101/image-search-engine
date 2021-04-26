@@ -8,8 +8,8 @@ from flask import request, jsonify
 from flask_cors import CORS
 from basic.basic_search import search as basic_search
 from cnn_classifier.cnn_search import search as cnn_search
-from kmeans_clustering.un_basic_search import search as un_basic_search
-from kmeans_clustering.un_cnn_search import search as un_cnn_search
+from Kmedoids_clustering.un_basic_search import search as un_basic_search
+from Kmedoids_clustering.un_cnn_search import search as un_cnn_search
 
 app = Flask(__name__)
 CORS(app)
