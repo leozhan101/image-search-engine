@@ -5,14 +5,9 @@ from keras.layers.convolutional import Conv2D, MaxPooling2D
 from keras.constraints import maxnorm
 from keras.utils import np_utils
 from keras import backend
-
-
-# Set random seed for purposes of reproducibility
-seed = 21
-
 from keras.datasets import cifar10
 
-# loading in the data
+# 1. Loading in the data
      
 (X_train, y_train), (X_test, y_test) = cifar10.load_data()
 
