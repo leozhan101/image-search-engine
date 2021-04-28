@@ -70,6 +70,11 @@ This project uses images from [cifar10](https://www.cs.toronto.edu/~kriz/cifar.h
     $ py update.csv.py
 ```
 
+### Update kmedoids_clustering
+Whenever you change `index.csv`(basic or cnn or both), you need to run `cluster.py` to ensure the clustering results are based on the latest `index.csv`
+```
+    $ py cluster.py
+```
 
 ## Reference
 https://stackabuse.com/image-recognition-in-python-with-tensorflow-and-keras/
