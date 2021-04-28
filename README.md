@@ -6,6 +6,9 @@ The main goal of this project is to explore the advantages and disadvantages of 
 ## Requirments
 [Python](https://www.python.org/)
 
+## Dataset
+The dataset currently being used is retrieved from keras named CIFAR-10, which is a large image dataset containing over 60,000 images representing 10 different classes of objects like cats, planes, and cars.
+
 ## Deployment
     
 Before running the backend, activate vm:
@@ -68,7 +71,7 @@ This project uses images from [cifar10](https://www.cs.toronto.edu/~kriz/cifar.h
 ```
 
 
-# Reference
+## Reference
 https://stackabuse.com/image-recognition-in-python-with-tensorflow-and-keras/
 
 https://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation

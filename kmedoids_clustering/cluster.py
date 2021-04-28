@@ -37,10 +37,8 @@ def generate_clusteringInfo(filePath):
 	allImages = np.array(results)
 	
 	if prefix == "basic":
-		print("for basic")
 		Kmedoids = KMedoids(n_clusters=10, metric=chi2_distance, method='pam', random_state=0).fit(allImages)
 	else:
-		print("for cnn")
 		Kmedoids = KMedoids(n_clusters=10, metric='cosine', method='pam', random_state=0).fit(allImages)
 
 	labels = Kmedoids.labels_
@@ -67,4 +65,4 @@ def generate_clusteringInfo(filePath):
 
 generate_clusteringInfo("../basic/index.csv")
 
-# generate_clusteringInfo("../cnn_classifier/index.csv")
+generate_clusteringInfo("../cnn_classifier/index.csv")
